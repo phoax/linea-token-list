@@ -1,11 +1,13 @@
 import { Module } from '@nestjs/common';
 
-import { TokenService } from './token.service';
-import { TokenSyncCommand } from './commands/sync.command';
-import { TokenVerifyCommand } from './commands/verify.command';
+import { TokenService } from './services/token.service';
+import { TokenVerifyService } from './services/verify.service';
+import { TokenSyncService } from './services/sync.service';
+import { LoggerModule } from '../logger/logger.module';
 
 @Module({
-  imports: [],
-  providers: [TokenService, TokenSyncCommand, TokenVerifyCommand],
+  imports: [LoggerModule],
+  providers: [TokenService, TokenVerifyService, TokenSyncService],
+  exports: [TokenSyncService, TokenVerifyService],
 })
 export class TokenModule {}
