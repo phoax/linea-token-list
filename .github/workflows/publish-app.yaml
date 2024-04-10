@@ -44,8 +44,8 @@ jobs:
         with:
           static_site_generator: next
 
-      # - name: Install pnpm dependencies
-      #   run: pnpm install
+      - name: Install pnpm dependencies
+        run: pnpm install
 
       - name: Build with Next.js
         run: npx next build
