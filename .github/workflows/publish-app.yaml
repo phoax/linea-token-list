@@ -1,8 +1,9 @@
-name: publish-to-github-pages
+name: Deploy to GitHub Pages
 
 on:
-  pull_request:
+  push:
     branches: [main]
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -14,12 +15,12 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  build:
+  build-and-deploy:
     runs-on: ubuntu-latest
 
     strategy:
       matrix:
-        node-version: [20]
+        node-version: [20] # Ensure this version is compatible with your project
 
     defaults:
       run:
@@ -29,45 +30,24 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v3
-        with:
-          version: 8
-
-      - name: Set up Node.js
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
+          cache: "pnpm"
 
-      - name: Setup Pages
-        uses: actions/configure-pages@v4
-        with:
-          static_site_generator: next
+      - name: Install pnpm
+        run: npm install -g pnpm
 
-      - name: Install pnpm dependencies
+      - name: Install dependencies
         run: pnpm install
 
       - name: Build with Next.js
-        run: npx next build
+        run: pnpm build # Assuming your package.json has a "build" script for Next.js
 
-      # - name: Build
-      #   run: pnpm run build
-
-      - name: Deploy 🚀
+      - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          folder: app/out
-          clean: true
-
-  # deploy0:
-  #   environment:
-  #     name: github-pages
-  #     url: ${{ steps.deployment.outputs.page_url }}
-
-  #   runs-on: ubuntu-latest
-  #   needs: build
-
-  #   steps:
-  #     - name: Publish to GitHub Pages
-  #       id: deployment
-  #       uses: actions/deploy-pages@v4
+          branch: gh-pages # The branch GitHub Pages is configured to use
+          folder: app/out # The folder to deploy
+          clean: true # This will clean out existing contents in the branch/folder before pushing
