@@ -56,7 +56,7 @@ jobs:
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          folder: out
+          folder: app/out
           clean: true
 
   deploy:
