@@ -53,10 +53,11 @@ jobs:
       # - name: Build
       #   run: pnpm run build
 
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
+      - name: Deploy 🚀
+        uses: JamesIves/github-pages-deploy-action@v4
         with:
-          path: ./out
+          folder: out
+          clean: true
 
   deploy:
     environment:
