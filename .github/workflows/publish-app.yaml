@@ -17,6 +17,14 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+    strategy:
+      matrix:
+        node-version: [20]
+
+    defaults:
+      run:
+        working-directory: ./app
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -36,15 +44,14 @@ jobs:
         with:
           static_site_generator: next
 
-      - name: Install pnpm dependencies
-        run: pnpm install
+      # - name: Install pnpm dependencies
+      #   run: pnpm install
 
-      # - name: Build with Next.js
-      #   run: npx next build
-      #   run: npx next build
+      - name: Build with Next.js
+        run: npx next build
 
-      - name: Build
-        run: pnpm run build
+      # - name: Build
+      #   run: pnpm run build
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
