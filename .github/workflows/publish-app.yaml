@@ -23,7 +23,7 @@ jobs:
 
     defaults:
       run:
-        working-directory: ./app
+        working-directory: ./docs
 
     steps:
       - name: Checkout
@@ -53,5 +53,5 @@ jobs:
         uses: JamesIves/github-pages-deploy-action@v4
         with:
           branch: gh-pages
-          folder: app/out
+          folder: docs/out
           clean: true
