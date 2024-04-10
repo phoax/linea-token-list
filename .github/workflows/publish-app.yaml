@@ -47,11 +47,11 @@ jobs:
         run: pnpm install
 
       - name: Build with Next.js
-        run: pnpm build # Assuming your package.json has a "build" script for Next.js
+        run: pnpm build
 
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          branch: gh-pages # The branch GitHub Pages is configured to use
-          folder: app/out # The folder to deploy
-          clean: true # This will clean out existing contents in the branch/folder before pushing
+          branch: gh-pages
+          folder: app/out
+          clean: true
